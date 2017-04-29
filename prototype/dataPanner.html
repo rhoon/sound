@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>Sound and Instruments Demo</title>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,700" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="">
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <audio>
+      <source src="mvp-project/crash1.mp3" type="audio/mp3">
+      <source src="mvp-project/crash2.mp3" type="audio/mp3">
+      <source src="mvp-project/crash3.mp3" type="audio/mp3">
+      <source src="mvp-project/crash4.mp3" type="audio/mp3">
+      <source src="mvp-project/crash5.mp3" type="audio/mp3">
+      <source src="mvp-project/crash6.mp3" type="audio/mp3">
+      <p>Hi friend, your browser is a bit too old for this site. We'd reccommend downloading <a href="https://www.google.com/chrome/browser/features.html?brand=CHBD&gclid=CjwKEAjwz9HHBRDbopLGh-afzB4SJABY52oFAxyi9kdFKgziuMmt1N2Jfr_ek89IPWkj4RcKEiHbThoCg3Pw_wcB">Chrome,</a> it's free.</p>
+    </audio>
+
+    <div id="container">
+      <h3>Car accidents in NYC<span id="date"></span></h3>
+      <h1 id="clock"></h1>
+    </div>
+
+    <pre></pre>
+
+  </body>
+
+<script>
+
+var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+var myAudio = document.querySelector('audio');
+var pre = document.querySelector('pre');
+var myScript = document.querySelector('script');
+//
+// var panControl = document.querySelector('.panning-control');
+// var panValue = document.querySelector('.panning-value');
+
+pre.innerHTML = myScript.innerHTML;
+
+
+var source;
+
+//get data gets the sound file
+function getData() {
+  source = audioCtx.createBufferSource(); //not supported by firefox
+  request = new XMLHttpRequest();
+  n = Math.floor(Math.random()*7);
+  console.log(n);
+  request.open('GET', 'crash'+n+'.mp3', true);
+  request.responseType = 'arraybuffer';
+  request.onload = function() {
+    var audioData = request.response;
+    audioCtx.decodeAudioData(audioData, function(buffer) {
+      source.buffer = buffer;
+      source.connect(audioCtx.destination);
+      // source.loop = true;
+    },
+    function(e) {
+      console.log("Error connecting to audio file" + e.err);
+    });
+  }
+  request.send();
+
+}
+
+// Create a stereo panner
+var panNode = audioCtx.createStereoPanner();
+var myLoc = [40.7128, 74.0059];
+
+//normalize min and max differences in location
+var pannerScale = d3.scaleLinear()
+  .range([-1, 1])
+  .domain([-0.2335599999999971, 0.28320999999999685]);
+
+d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
+  console.log(data);
+
+
+  //select clock
+  var clock = d3.select('h1#clock');
+  var date = d3.select('span#date');
+  //recursive loop
+  //loop index - 1 min
+  var loopTime = 0;
+  //data index
+  var i = 0;
+  var dura = 100; // assign this to a time
+
+  date.text(' '+data[i].DATE);
+
+  function myLoop () {           //  create a loop function
+     setTimeout(function () {    //  call setTimeout when the loop is called
+
+      // get clock display values from data
+      var ampm = 'am';
+      var hr = Math.floor(loopTime/60);
+      if (hr>=12) { hr=hr%12; ampm = 'pm'; };
+      if (hr<10) { hr='0'+hr; }
+      if (hr<1) { hr=12; }
+      var min = loopTime%60;
+      if (min<10) { min='0'+min; }
+      // display clock values
+      clock.html(hr+':'+min+'<span id="ampm">'+ampm+'</span>');
+
+       if (loopTime==data[i].TIME) {
+
+         console.log('match');
+
+         var w = 0;
+         var t;
+
+         while (loopTime==data[i].TIME) {
+
+           t = parseFloat(data[i].TIME);
+
+           lat = data[i].LATITUDE;
+           lng = data[i].LONGITUDE;
+
+           diff = parseFloat(lng)+parseFloat(myLoc[1]);
+
+           //adjust the panner
+           if (!isNaN(diff)) {
+             panNode.pan.value = pannerScale(diff);
+           }
+
+           //play a Sound
+           getData();
+           source.connect(panNode);
+           panNode.connect(audioCtx.destination);
+           source.start(0);
+
+           w++;
+           i++;
+           console.log('i: '+i+'w: '+w);
+
+         }
+
+       }
+
+      //recursive loop call
+      loopTime++;
+      if (loopTime < (1440*7)) {
+           myLoop();
+      }
+    }, dura)
+  }
+
+  myLoop();
+
+});
+
+
+  </script>
+</html>
