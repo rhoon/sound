@@ -15,7 +15,7 @@ var source;
 function getData() {
   source = audioCtx.createBufferSource(); //not supported by firefox
   request = new XMLHttpRequest();
-  n = Math.ceil(Math.random()*6);
+  n = Math.ceil(Math.random()*20);
   // n = 2;
   console.log('sounds/crash'+n+'.mp3');
   request.open('GET', 'sounds/crash'+n+'.mp3', true);
@@ -65,9 +65,15 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
     canPlay = true;
     crashPlayer();
   }
+
+  function toggleNorth() {
+    northSpeakers = !northSpeakers;
+    console.log('NORTH: '+northSpeakers);
+  }
   //
   d3.select('div#play').on('click', play);
   d3.select('div#pause').on('click', pause);
+  d3.select('div#north').on('click', toggleNorth);
 
   // NORTH/SOUTH    --------------------------------
 
@@ -116,11 +122,17 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
          diffX = parseFloat(lng)+parseFloat(myLoc[1]);
          diffY = parseFloat(lat)-parseFloat(myLoc[0]);
+         dist = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+         console.log('DIFFX: '+diffX);
+         console.log('DIFFY: '+diffY);
+         console.log('DIST: '+dist);
 
-        // volume range works well with 0-10 values
-         var volScale = 20,
-             northVol = northSouthScale(diffY)*volScale,
-             southVol = (1-northVol)*volScale;
+        // volume might be generating errors. Try normalizing it to smaller range
+        // and expanding range slowly to see if the errors continue
+         var volScale = 10,
+             distScale = 1/(dist*100);
+             northVol = northSouthScale(diffY)*volScale*distScale,
+             southVol = (1-northVol)*volScale*distScale;
 
          //adjust the panner
          if (!isNaN(diffX)) {
@@ -149,10 +161,11 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
         // check for simultaneous crashes
         if(loopTime==data[i].TIME) {
           // if simultaneous, short duration between recurse
-          dura = 20;
+          dura = 125;
+          console.log('SIMULTANEOUS');
         } else {
           // if not simultaneous, full duration between recurse
-          dura = 120;
+          dura = 200;
           loopTime++;
         }
       }
