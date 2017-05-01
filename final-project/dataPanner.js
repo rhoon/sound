@@ -10,12 +10,20 @@ pre.innerHTML = myScript.innerHTML;
 
 var source;
 
+// switch to prevent simultaneous calls to the same file
+var fileSubset = [0,5,10,15];
+var fileIndex = 0;
 
 //get data gets the sound file
 function getData() {
   source = audioCtx.createBufferSource(); //not supported by firefox
   request = new XMLHttpRequest();
-  n = Math.ceil(Math.random()*20);
+
+  console.log('FILEINDEX: '+fileIndex);
+  var n = Math.ceil(Math.random()*5)+fileSubset[fileIndex];
+  fileIndex++;
+  if (fileIndex>3) { fileIndex = 0; }
+
   // n = 2;
   console.log('sounds/crash'+n+'.mp3');
   request.open('GET', 'sounds/crash'+n+'.mp3', true);
@@ -38,6 +46,16 @@ function getData() {
 var panNode = audioCtx.createStereoPanner();
 // Create volume control
 var gainNode = audioCtx.createGain();
+// Create limiter
+var compressor = audioCtx.createDynamicsCompressor();
+compressor.threshold.value = -50;   // decibel value above which the compression will start taking effect.
+compressor.knee.value = 40;         // dB range above the threshold where the curve smoothly transitions to the compressed portion
+compressor.ratio.value = 3;         // amount of change, in dB, needed in the input for a 1 dB change in the output
+compressor.reduction.value = -20;   // gain reduction currently applied by the compressor
+compressor.attack.value = 0;        // amount of time, in seconds, required to reduce the gain by 10 dB.
+compressor.release.value = 0.25;    // amount of time, in seconds, required to increase the gain by 10 dB.
+
+
 var myLoc = [40.7128, 74.0059];
 
 //normalize min and max differences in location
@@ -55,7 +73,9 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
   console.log(data);
 
   // PLAY / PAUSE --------------------------------
-  var canPlay = false;
+
+  var canPlay = true;
+  crashPlayer();
 
   function pause() {
     canPlay = false;
@@ -79,7 +99,6 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
   var northSpeakers = false; // make this dynamic based on a button
 
-
   // CLOCK        --------------------------------
 
   //select clock
@@ -93,8 +112,8 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
   date.text(' '+data[i].DATE);
 
-  function crashPlayer() {           //  create a loop function
-     setTimeout(function () {    //  call setTimeout when the loop is called
+  function crashPlayer() {           // create a loop function
+     setTimeout(function () {        // call setTimeout when the loop is called
 
       // get clock display values from data
       var ampm = 'am';
@@ -140,6 +159,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
          if (!isNaN(diffX)) {
           console.log('northVol: '+northVol);
           panNode.pan.value = eastWestScale(diffX);
+          console.log('PAN: '+eastWestScale(diffX));
           if (northSpeakers) {
             gainNode.gain.value = northVol;
           } else {
@@ -148,9 +168,11 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
            //play a Sound
            getData();
-           source.connect(panNode);
-           panNode.connect(gainNode);
-           gainNode.connect(audioCtx.destination);
+           source.connect(gainNode);
+           gainNode.connect(compressor);
+           compressor.connect(panNode);
+           //pan is much more effective if it happens after compressor
+           panNode.connect(audioCtx.destination);
            source.start(0);
          }
 
