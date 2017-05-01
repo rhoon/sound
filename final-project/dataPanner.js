@@ -126,6 +126,8 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
          console.log('DIFFX: '+diffX);
          console.log('DIFFY: '+diffY);
          console.log('DIST: '+dist);
+         var timeTotal = (loopTime*200)+(i*125);
+         console.log('TIME TOTAL: '+timeTotal);
 
         // volume might be generating errors. Try normalizing it to smaller range
         // and expanding range slowly to see if the errors continue
