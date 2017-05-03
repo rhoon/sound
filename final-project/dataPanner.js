@@ -6,6 +6,21 @@ var myScript = document.querySelector('script');
 // var panControl = document.querySelector('.panning-control');
 // var panValue = document.querySelector('.panning-value');
 
+var colors = [
+  '#222',
+  '#555',
+  '#666',
+  '#777',
+  '#888',
+  '#999',
+  '#AAA',
+  '#BBB',
+  '#CCC',
+  '#DDD',
+  '#EEE',
+  '#f2f2f2'
+]
+
 pre.innerHTML = myScript.innerHTML;
 
 var source;
@@ -143,7 +158,6 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
       // display clock values
       clock.html(hr+':'+min+'<span id="ampm">'+ampm+'</span>');
 
-
        if (loopTime==data[i].TIME) {
 
          var w = 0;
@@ -201,7 +215,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
         // check for simultaneous crashes
         if(loopTime==data[i].TIME) {
           // if simultaneous, short duration between recurse
-          dura = 100;
+          dura = 75;
           console.log('SIMULTANEOUS');
         } else {
           // if not simultaneous, full duration between recurse
@@ -212,7 +226,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
       // recursive loop call
       if (loopTime<1440 && canPlay) {
-           crashPlayer();
+          simCount = 0;
       }
     }, dura)
   }
