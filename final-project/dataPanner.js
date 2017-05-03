@@ -74,7 +74,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
   // PLAY / PAUSE --------------------------------
 
-  var canPlay = true;
+  var canPlay = false;
   crashPlayer();
 
   function pause() {
@@ -83,16 +83,32 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
   function play() {
     canPlay = true;
+    d3.select('#entrance')
+      .style('display', 'none');
+    // clock.style('opacity', 1);
+    // date.style('opacity', 1);
     crashPlayer();
   }
 
   function toggleNorth() {
     northSpeakers = !northSpeakers;
     console.log('NORTH: '+northSpeakers);
+    if (northSpeakers) {
+      d3.select('div#north')
+        .style('color','#f2f2f2')
+        .style('background', '#222')
+        .text('NORTH');
+    } else {
+      d3.select('div#north')
+        .style('color','#222')
+        .style('background', '#f2f2f2')
+        .text('SOUTH');
+    }
   }
+
   //
-  d3.select('div#play').on('click', play);
-  d3.select('div#pause').on('click', pause);
+  d3.selectAll('.play').on('click', play);
+  d3.selectAll('.pause').on('click', pause);
   d3.select('div#north').on('click', toggleNorth);
 
   // NORTH/SOUTH    --------------------------------
@@ -185,11 +201,11 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
         // check for simultaneous crashes
         if(loopTime==data[i].TIME) {
           // if simultaneous, short duration between recurse
-          dura = 125;
+          dura = 100;
           console.log('SIMULTANEOUS');
         } else {
           // if not simultaneous, full duration between recurse
-          dura = 200;
+          dura = 175;
           loopTime++;
         }
       }
