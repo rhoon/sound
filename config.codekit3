@@ -57,28 +57,6 @@
 		"sC": 1,
 		"tS": 0
 		},
-	"\/final-project\/images\/pause.png": {
-		"ft": 32768,
-		"iS": 284,
-		"oA": 0,
-		"oAP": "\/final-project\/images\/pause.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
-		},
-	"\/final-project\/images\/play.png": {
-		"ft": 32768,
-		"iS": 805,
-		"oA": 0,
-		"oAP": "\/final-project\/images\/play.png",
-		"oF": 0,
-		"oIPL": 0,
-		"opt": 0,
-		"oT": 1,
-		"q": 100
-		},
 	"\/final-project\/index.html": {
 		"ft": 8192,
 		"oA": 2,
