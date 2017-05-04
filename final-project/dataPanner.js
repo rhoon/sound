@@ -226,7 +226,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
       // recursive loop call
       if (loopTime<1440 && canPlay) {
-          simCount = 0;
+          crashPlayer();
       }
     }, dura)
   }
