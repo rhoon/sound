@@ -199,11 +199,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
         // check for simultaneous crashes
         if(loopTime==data[i].TIME) {
           // if simultaneous, short duration between recurse
-<<<<<<< HEAD
-          dura = 75;
-=======
           dura = 125;
->>>>>>> parent of 700a6de... added better play/pause, more functionality
           console.log('SIMULTANEOUS');
         } else {
           // if not simultaneous, full duration between recurse
