@@ -1,7 +1,7 @@
 body {
   color: #f2f2f2;
-  background-color: #222;
-  font-family: 'Space Mono', monospace;
+  background-color: #1a1a1a;
+  font-family: 'Work Sans', sans-serif;
 }
 
 h3 {
@@ -13,6 +13,7 @@ h3 {
 
 h1#clock {
   /*opacity: .1;*/
+  font-family: 'Space Mono', monospace;
   font-size: 1500%;
   font-weight: normal;
   margin: 0 auto;
@@ -26,8 +27,11 @@ span#ampm {
 
 #container {
   width: 70%;
-  margin: 0 auto;
-  margin-top: 18%;
+  position: fixed;
+  top: 30%;
+  left: 18%;
+  z-index: 1;
+  opacity: .05;
 }
 
 .button {
@@ -35,21 +39,27 @@ span#ampm {
   font-weight: bold;
   color: #222;
   padding: 10px;
-  margin: 20px auto 20px auto;
+  /*margin: 20px auto 20px auto;*/
   width: 100px;
   text-align: center;
   letter-spacing: 2px;
 }
 
 #entrance {
-  width: 10%;
+  width: 20%;
   /*height: 30%;*/
   background-color: #f2f2f2;
   padding: 5%;
   position: absolute;
   top: 30%;
-  left: 40%;
+  left: 30%;
   box-shadow: 0 0 12px 0 rgba(175,175,175,0.50);
+}
+
+#entrance p{
+  margin: 0 0 2em 0;
+  padding: 0;
+  color: #222;
 }
 
 .icon {
@@ -68,4 +78,111 @@ span#ampm {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+#about {
+  width: 80%;
+  padding: 5em;
+  margin: 5em auto 0 auto;
+  max-width: 800px;
+  background-color: #222;
+  box-shadow: 0 0 25px 0 rgba(0,0,0,0.50);
+  position: relative;
+  z-index: 10;
+  display: none;
+}
+
+#about p {
+  margin-top: 0;
+  font-weight: 300;
+  font-size: 1.5em;
+  line-height: 1.5em;
+}
+
+#about a {
+  color: #f2f2f2;
+}
+
+#aboutFooter {
+  font-weight: 300;
+}
+
+#closeButton {
+  width: 1.5em;
+  height: 1.5em;
+  position: absolute;
+  top: 2em;
+  right: 2em;
+  cursor: pointer;
+}
+
+.nav {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+#playButton {
+  height: 6em;
+  width: 20%;
+  position: absolute;
+  left: 40%;
+  top: 40%;
+  z-index: 10;
+}
+
+#playButton img {
+  width: 6em;
+  height: 6em;
+  float: left;
+  margin-right: 1.5em;
+}
+
+#playButton p {
+  position: relative;
+  top: 1em;
+}
+
+#aboutLink {
+  -ms-transform: rotate(-90deg); /* IE 9 */
+  -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+  transform: rotate(-90deg);
+  position: fixed;
+  top: 45%;
+  left: 1em;
+}
+
+#shareLink {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+  transform: rotate(90deg);
+  position: fixed;
+  top: 45%;
+  right: 1em;
+  z-index: 999;
+}
+
+#shareButtons {
+  z-index: 999;
+  position: absolute;
+  right: -4em;
+  top: 35%;
+  height: 30%;
+  width: 4em;
+}
+
+.shareButton {
+  width: 3em;
+  height: 3em;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.pause {
+  cursor: pointer;
 }

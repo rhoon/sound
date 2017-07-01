@@ -29,6 +29,30 @@ var source;
 var fileSubset = [0,5,10,15];
 var fileIndex = 0;
 
+function showShare() {
+
+  d3.select('#shareLink')
+    .transition()
+    .style('opacity', 0);
+
+  d3.select('div#shareButtons')
+    .transition()
+    .style('right', '1em');
+
+}
+
+function hideShare() {
+
+  d3.select('#shareLink')
+    .transition()
+    .style('opacity', 1);
+
+  d3.select('div#shareButtons')
+    .transition()
+    .style('right', '-4em');
+
+}
+
 //get data gets the sound file
 function getData() {
   source = audioCtx.createBufferSource(); //not supported by firefox
@@ -71,7 +95,7 @@ compressor.attack.value = 0;        // amount of time, in seconds, required to r
 compressor.release.value = 0.25;    // amount of time, in seconds, required to increase the gain by 10 dB.
 
 
-var myLoc = [40.7128, 74.0059];
+var myLoc = [40.7831, 73.9712];
 
 //normalize min and max differences in location
 var eastWestScale = d3.scaleLinear()
@@ -94,14 +118,30 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
   function pause() {
     canPlay = false;
+
+    d3.select('div#container')
+      .transition()
+      .style('opacity', .05);
+
+    d3.select('#playButton')
+      .style('display', 'block');
+
+    d3.select('#playButton')
+      .transition()
+      .style('opacity', 1);
   }
 
   function play() {
     canPlay = true;
-    d3.select('#entrance')
+    d3.select('#playButton')
+      .transition()
+      .style('opacity', 0)
       .style('display', 'none');
-    // clock.style('opacity', 1);
-    // date.style('opacity', 1);
+
+    d3.select('div#container')
+      .transition()
+      .style('opacity',1);
+
     crashPlayer();
   }
 
