@@ -111,13 +111,9 @@ var northSouthScale = d3.scaleLinear()
 d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
   console.log(data);
 
-<<<<<<< HEAD
   // PLAY / PAUSE --------------------------------
 
-  var canPlay = true;
-=======
   var canPlay = false;
->>>>>>> recurseFix
   crashPlayer();
 
   function pause() {
@@ -137,8 +133,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
   function play() {
     canPlay = true;
-<<<<<<< HEAD
-=======
+
     d3.select('#playButton')
       .transition()
       .style('opacity', 0)
@@ -148,7 +143,6 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
       .transition()
       .style('opacity',1);
 
->>>>>>> recurseFix
     crashPlayer();
   }
 
