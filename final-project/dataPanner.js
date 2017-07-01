@@ -87,13 +87,13 @@ var panNode = audioCtx.createStereoPanner();
 var gainNode = audioCtx.createGain();
 // Create limiter
 var compressor = audioCtx.createDynamicsCompressor();
+
 compressor.threshold.value = -50;   // decibel value above which the compression will start taking effect.
 compressor.knee.value = 40;         // dB range above the threshold where the curve smoothly transitions to the compressed portion
 compressor.ratio.value = 3;         // amount of change, in dB, needed in the input for a 1 dB change in the output
 compressor.reduction.value = -20;   // gain reduction currently applied by the compressor
 compressor.attack.value = 0;        // amount of time, in seconds, required to reduce the gain by 10 dB.
 compressor.release.value = 0.25;    // amount of time, in seconds, required to increase the gain by 10 dB.
-
 
 var myLoc = [40.7831, 73.9712];
 
@@ -110,8 +110,6 @@ var northSouthScale = d3.scaleLinear()
 
 d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
   console.log(data);
-
-  // PLAY / PAUSE --------------------------------
 
   var canPlay = false;
   crashPlayer();

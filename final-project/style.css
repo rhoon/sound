@@ -2,6 +2,8 @@ body {
   color: #f2f2f2;
   background-color: #1a1a1a;
   font-family: 'Work Sans', sans-serif;
+  width: 100vw;
+  overflow: hidden;
 }
 
 h3 {
@@ -161,15 +163,24 @@ span#ampm {
   top: 45%;
   right: 1em;
   z-index: 999;
+  cursor: pointer;
+}
+
+#closeShare {
+  width: 1.2em;
+  height: 1.2em;
+  margin: .5em;
+  cursor: pointer;
 }
 
 #shareButtons {
   z-index: 999;
   position: absolute;
   right: -4em;
-  top: 35%;
+  top: 33%;
   height: 30%;
   width: 4em;
+  text-align: center;
 }
 
 .shareButton {
