@@ -5,29 +5,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width">
 
-    <title>Sound and Instruments Demo</title>
+    <title>MVC Sonification</title>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
 
-    <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Space+Mono|Work+Sans:300,400" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 
     <link rel="stylesheet" href="">
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+
   </head>
 
   <body>
 
+<<<<<<< HEAD
     <div id="play" class="button">PLAY</div>
     <div id="pause" class="button">PAUSE</div>
     <div id="north" class="button">NORTH</div>
+=======
 
-    <div id="container">
+    <div id="playButton" class="nav play">
+      <img src="images/playbutton.svg">
+      <p>Headphones<br/>Required</p>
+    </div>
 
+    <div id="aboutLink" class="nav" onclick="document.getElementById('about').style.display='block';">
+      About
+    </div>
+
+    <div id="shareLink" class="nav" onclick="showShare()">
+      Share
+    </div>
+
+    <div id="shareButtons">
+
+      <img id="closeShare" src="images/closeButton.svg" onclick="hideShare()" />
+
+      <a href="mailto:?Subject=Simple Share Buttons&amp;Body=I%20thought%20you%20might%20be%20interested%20in%20this%20sonfication%20of%20NYC%20Motor%20Vehicle%20Collisions:%20 https://www.rileyhoonan.com/mvc" target="blank">
+        <img class="shareButton" src="images/email.svg" onclick="hideShare()" />
+      </a>
+
+      <a href="https://twitter.com/share?url=https://www.rileyhoonan.com/mvc&amp;text=NYC%20Motor%20Vehicle%20Collisions&amp;hashtags=nyc" target="blank">
+        <img class="shareButton" src="images/tweet.svg" onclick="hideShare()" />
+      </a>
+
+      <a href="http://www.facebook.com/sharer.php?u=https://www.rileyhoonan.com/mvc" target="blank">
+        <img class="shareButton" src="images/fb.svg" onclick="hideShare()" />
+      </a>
+
+      <a href="http://www.tumblr.com/share/link?url=https://www.rileyhoonan.com/mvc&amp;title=NYC Motor Vehicle Collisions" target="blank">
+        <img class="shareButton" src="images/tumblr.svg" onclick="hideShare()" />
+      </a>
+
+    </div>
+
+
+
+    <div id="about">
+      <img id="closeButton" src="images/closeButton.svg" onclick="document.getElementById('about').style.display='none';"/>
+      <p>Data disassociation is the state of information numbness caused by the deluge by figures and statistics in our daily lives. This web app attempts to remedy said disassociation by giving sound to the lived experiences behind a spreadsheet.</p>
+      <p>Specifically, it is a sonification of the Motor Vehicle Collision data available on <a href="https://opendata.cityofnewyork.us/">NYC&rsquo;s OpenData portal</a> for the date XX/XX/XXXX.</p>
+      <p>The web application plays a collision sound for each collision event in the 24-hour period, compressed into roughly 2.5 minutes. Sounds are randomly selected per event, so each playback is unique. The sounds are gathered from dashcam and security footage of collisions, but are not specific to the collisions they represent. </p>
+      <p>Sounds are spatialized as though the listener were in the <a href="https://www.google.com/maps/place/40%C2%B046'59.2%22N+73%C2%B058'16.3%22W/@40.7831,-73.973394,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x0!8m2!3d40.7831!4d-73.9712">center of Manhattan</a> and all of NYC was within hearing distance. </p>
+      <div id="aboutFooter">Made by Riley Hoonan | Parsons Spring 2017 <br /> Exhibited in 4-channel surround sound at <a href="http://anywaysnyc.com/">Anyways Here&rsquo;s the Thing</a> May 1st 2017 for 'Sonic Mesh'</div>
+    </div>
+
+    <!-- <div id="pausePlay">
+      <img src="images/pause.png" class="icon pause" />
+      <img src="images/play.png" class="icon play" />
+    </div> -->
+>>>>>>> recurseFix
+
+    <div id="container" class="pause">
+
+<<<<<<< HEAD
       <h3>Car accidents in NYC<span id="date"></span></h3>
       <h1 id="clock">12:00</h1>
+=======
+      <h3>Motor Vehicle Collisions - NYC - <span id="date"></span></h3>
+      <h1 id="clock">12:00<span id="ampm">am</span></h1>
+>>>>>>> recurseFix
 
     </div>
 
