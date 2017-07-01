@@ -151,9 +151,8 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
     console.log('NORTH: '+northSpeakers);
   }
   //
-  d3.select('div#play').on('click', play);
-  d3.select('div#pause').on('click', pause);
-  d3.select('div#north').on('click', toggleNorth);
+  d3.select('.play').on('click', play);
+  d3.select('.pause').on('click', pause);
 
   // NORTH/SOUTH    --------------------------------
 
@@ -207,24 +206,14 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
          var timeTotal = (loopTime*200)+(i*125);
          console.log('TIME TOTAL: '+timeTotal);
 
-        // volume might be generating errors. Try normalizing it to smaller range
-        // and expanding range slowly to see if the errors continue
-         var volScale = 10,
-             distScale = 1/(dist*100);
-             northVol = northSouthScale(diffY)*volScale*distScale,
-             southVol = (1-northVol)*volScale*distScale;
+         var volScale = 10,             // volume knob
+             distScale = 1/(dist*100);  // distance penalty
+            //  northVol = northSouthScale(diffY)*volScale*distSca
 
          //adjust the panner
          if (!isNaN(diffX)) {
-          console.log('northVol: '+northVol);
-          panNode.pan.value = eastWestScale(diffX);
-          console.log('PAN: '+eastWestScale(diffX));
-          if (northSpeakers) {
-            gainNode.gain.value = northVol;
-          } else {
-            gainNode.gain.value = southVol;
-          }
-
+            panNode.pan.value = eastWestScale(diffX);
+            gainNode.gain.value = volScale*distScale;
            //play a Sound
            getData();
            source.connect(gainNode);
@@ -245,7 +234,6 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
         if(loopTime==data[i].TIME) {
           // if simultaneous, short duration between recurse
           dura = 125;
-          console.log('SIMULTANEOUS');
         } else {
           // if not simultaneous, full duration between recurse
           dura = 200;
