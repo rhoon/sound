@@ -2,7 +2,8 @@ body {
   color: #f2f2f2;
   background-color: #1a1a1a;
   font-family: 'Work Sans', sans-serif;
-  width: 100vw;
+  width: 100vw; /* doesn't seem to work in mobile??? */
+  max-width:100%;
   overflow: hidden;
 }
 
@@ -192,4 +193,23 @@ a {
 
 .pause {
   cursor: pointer;
+}
+
+@media only screen and (min-device-width : 375px)
+  and (max-device-width : 667px)
+  and (orientation : portrait) {
+
+    #container {
+      top: 37%;
+    }
+
+    h1#clock {
+      font-size: 400%;
+    }
+
+    h3 {
+      font-size: .6em;
+    }
+
+
 }

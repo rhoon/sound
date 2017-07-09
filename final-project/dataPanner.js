@@ -6,21 +6,6 @@ var myScript = document.querySelector('script');
 // var panControl = document.querySelector('.panning-control');
 // var panValue = document.querySelector('.panning-value');
 
-var colors = [
-  '#222',
-  '#555',
-  '#666',
-  '#777',
-  '#888',
-  '#999',
-  '#AAA',
-  '#BBB',
-  '#CCC',
-  '#DDD',
-  '#EEE',
-  '#f2f2f2'
-]
-
 pre.innerHTML = myScript.innerHTML;
 
 var source;
@@ -71,7 +56,6 @@ function getData() {
     audioCtx.decodeAudioData(request.response, function(buffer) {
       source.buffer = buffer;
       source.connect(audioCtx.destination); // pre-gain node
-      // source.loop = true;
     },
     function(e) {
       console.log("Error connecting to audio file" + e.err);
@@ -132,6 +116,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
   }
 
   function play() {
+
     canPlay = true;
 
     d3.select('#playButton')
