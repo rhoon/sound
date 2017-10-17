@@ -147,7 +147,7 @@ d3.csv("data/nyc-mvc-oneDayMarch.csv", function(data) {
 
   //select clock
   var clock = d3.select('h1#clock');
-  var date = d3.select('span#date');
+  var date = d3.selectAll('span#date');
 
   //recursive loop
   var loopTime = 0,        // loop index (iterates until time up)
